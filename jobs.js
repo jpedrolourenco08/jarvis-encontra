@@ -29,7 +29,7 @@ export async function fetchGupy(url) {
     if (!payload || !Array.isArray(payload.data)) throw Error('Resposta da Gupy em formato não reconhecido');
     return payload;
   } catch (error) {
-    if (/403|CONNECT tunnel failed/.test(String(error.stderr))) throw Error('Acesso à Gupy negado (403). Confira a liberação de portal.api.gupy.io nas configurações de rede');
+    if (/403|CONNECT tunnel failed/.test(String(error.stderr))) throw Error('Acesso à Gupy negado (403). Confira o acesso a portal.gupy.io nas configurações de rede');
     if (error instanceof SyntaxError) throw Error('A Gupy não retornou JSON válido');
     if (error.code || error.killed) throw Error('Não foi possível consultar a Gupy: rede, tempo limite ou resposta HTTP. Tente novamente após verificar a conexão');
     throw error;
@@ -55,7 +55,7 @@ export async function collectJobs({fetchPage=fetchGupy,queries=terms,maxPages=2,
         if (!/product owner|product manager|product operations|product ops|\bpo\b|\bpm\b|produto|projetos|processos/.test(title) || /estagi|internship/.test(title)) {excluded++;continue;}
         byUrl.set(job.url,job);
       }
-      const total = Number.isFinite(payload.total) ? payload.total : null;
+      const total = Number.isFinite(payload.pagination?.total) ? payload.pagination.total : Number.isFinite(payload.total) ? payload.total : null;
       if (payload.data.length < pageSize || (total !== null && (page+1)*pageSize >= total)) break;
       if (page===maxPages-1) incompleteQueries.push(query);
     }
