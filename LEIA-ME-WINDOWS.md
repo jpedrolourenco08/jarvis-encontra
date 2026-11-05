@@ -1,6 +1,6 @@
 # Jarvis Encontra no Windows
 
-1. Instale o **Node.js LTS**, versão 22 ou superior, pelo site oficial https://nodejs.org/ . Mantenha a opção de adicionar ao PATH. Este projeto não precisa de ferramentas extras de compilação nem de pacotes npm.
+1. Instale o **Node.js LTS**, versão 22 ou superior, pelo site oficial https://nodejs.org/ . Mantenha a opção de adicionar ao PATH. A busca não precisa de ferramentas extras de compilação nem instalação npm. A preparação opcional do Chrome instala playwright-core pelo próprio iniciador.
 2. Extraia o ZIP inteiro para uma pasta do seu usuário, por exemplo `Documentos\jarvis-encontra`. Não execute de dentro do ZIP.
 3. Abra `INICIAR-JARVIS.cmd` com dois cliques. Se o Node acabou de ser instalado e não for encontrado, feche e reabra o terminal/aplicativo.
 4. Espere a mensagem `Jarvis Encontra iniciado na porta 3000`.
@@ -54,3 +54,9 @@ Na pasta obtida com `git clone`, encerre o servidor e abra **ATUALIZAR-JARVIS.cm
 Para apenas rodar os testes, abra **TESTAR-JARVIS.cmd**. Os resultados ficam visíveis na janela; falhas não iniciam o servidor. Depois de uma atualização bem-sucedida, abra `INICIAR-JARVIS.cmd` e use Ctrl+F5 no navegador.
 
 Na primeira atualização, antes de esses atalhos existirem na sua pasta, execute `git pull --ff-only` e `npm.cmd test` no PowerShell. Mudanças propostas por pull request só chegam à `main` após a integração. O GitHub Actions também executa os testes em Linux e Windows com Node 22 e 24; esses testes usam dados sintéticos e não consultam vagas reais nem enviam candidaturas.
+
+## Conectar o Chrome local para a próxima etapa
+
+Após receber esta atualização pelo Git, abra `PREPARAR-CHROME.cmd`. Ele instala a dependência de automação e abre uma sessão separada do Chrome. Entre na Gupy no navegador, abra a primeira etapa de uma candidatura sem enviá-la e siga as instruções do terminal. O usuário já autorizou a integração; não forneça senha ou cookies ao chat. Esta versão apenas inspeciona controles. O envio automático continua pendente da validação dos formulários reais.
+
+Compartilhe somente o resumo de contagens e ações impresso no terminal. Nunca compartilhe `data/chrome-automation`: essa pasta guarda sua sessão de login. O Chrome normal não precisa ser fechado, mas somente uma instância do perfil de automação deve ficar aberta por vez.
