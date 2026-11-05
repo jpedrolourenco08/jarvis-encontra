@@ -11,7 +11,7 @@ Mantenha a janela do iniciador aberta. Para encerrar, pressione Ctrl+C. Para ini
 
 ## O que está validado
 
-Código e testes locais no Linux; execução nativa no Windows e resposta atual da API Gupy ainda precisam de validação. Na nuvem, o proxy bloqueou a consulta antes de chegar à fonte. Rodar no Windows elimina a dependência dessa publicação, mas a Gupy ainda pode negar o acesso ou alterar o formato da API. Não há garantia de que haverá vagas compatíveis.
+Os 26 testes passaram no Linux cloud, e a consulta real à Gupy retornou vagas públicas. O usuário confirmou que a versão anterior abriu e retornou vagas no Windows; o histórico desta atualização ainda precisa ser exercitado nesse sistema. O painel filtra inicialmente títulos de entrada/júnior; marque **Mostrar todos** para revisar anúncios sem nível explícito ou de outros níveis. Nenhuma candidatura é preenchida ou enviada nesta versão. A Gupy pode negar o acesso ou alterar o formato da API em execuções futuras.
 
 LinkedIn e Inhire são links de busca, sem coleta integrada. Não há agendamento ou envio de candidaturas. A última coleta válida fica em `data/jobs.json`; erros não sobrescrevem esse arquivo. A coleta tem cache de 15 minutos e limites de páginas. O servidor fica acessível somente no seu próprio computador.
 
@@ -35,3 +35,22 @@ node server.js
 ```
 
 Abra então http://127.0.0.1:3001 . Se houver erro HTTP 403, erro de certificado, timeout ou formato da fonte não reconhecido, copie a mensagem do painel para diagnóstico. Não envie senhas, tokens nem arquivos de credenciais.
+
+## Atualizar para 0.2.0 sem perder os dados
+
+1. Encerre o Jarvis antigo com Ctrl+C na janela do iniciador.
+2. Extraia o novo ZIP em uma pasta temporária.
+3. Copie o conteúdo da pasta `jarvis-encontra` extraída para dentro da pasta onde você já usa o aplicativo, substituindo os arquivos de código. Não crie uma segunda pasta `jarvis-encontra` dentro da antiga.
+4. **Mantenha a pasta `data` existente. Não apague nem substitua seus dados.** O pacote não contém essa pasta.
+5. Abra `INICIAR-JARVIS.cmd` novamente e atualize a página com Ctrl+F5.
+6. Em uma vaga, use **Salvar no histórico** com estado Pendente. Recarregue o painel e confira se o registro permanece na seção Histórico de candidaturas.
+
+O registro “Enviada — confirmação manual” só deve ser usado se a plataforma já confirmou que recebeu sua candidatura. O Jarvis 0.2.0 não preenche nem envia formulários.
+
+## Atualizar e testar com Git
+
+Na pasta obtida com `git clone`, encerre o servidor e abra **ATUALIZAR-JARVIS.cmd**. Ele executa `git pull --ff-only` na branch atual e, depois, os testes. Alterações locais de código interrompem o processo; não há reset, limpeza de dados nem resolução automática de conflitos. Mantenha a branch `main` para receber versões integradas. A pasta `data` é ignorada pelo Git.
+
+Para apenas rodar os testes, abra **TESTAR-JARVIS.cmd**. Os resultados ficam visíveis na janela; falhas não iniciam o servidor. Depois de uma atualização bem-sucedida, abra `INICIAR-JARVIS.cmd` e use Ctrl+F5 no navegador.
+
+Na primeira atualização, antes de esses atalhos existirem na sua pasta, execute `git pull --ff-only` e `npm.cmd test` no PowerShell. Mudanças propostas por pull request só chegam à `main` após a integração. O GitHub Actions também executa os testes em Linux e Windows com Node 22 e 24; esses testes usam dados sintéticos e não consultam vagas reais nem enviam candidaturas.

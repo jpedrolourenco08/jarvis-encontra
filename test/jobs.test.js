@@ -25,6 +25,13 @@ test('sinaliza truncamento e falhas parciais sem esconder anúncios recebidos',a
  const result=await collectJobs({queries:['Produto','Projetos'],maxPages:1,pageSize:1,fetchPage:async url=>{if(new URL(url).searchParams.get('jobName')==='Projetos')throw Error('Fonte indisponível');return {total:10,data:[sample()]};}});
  assert.equal(result.status,'partial');assert.deepEqual(result.incompleteQueries,['Produto']);assert.equal(result.errors.length,1);assert.equal(result.jobs.length,1);
 });
+test('respeita pagination.total no formato atual da Gupy',async()=>{
+ let calls=0;
+ const result=await collectJobs({queries:['Produto'],pageSize:2,fetchPage:async()=>{
+  calls++;return {pagination:{total:2,limit:2,offset:0},data:[sample(1),sample(2)]};
+ }});
+ assert.equal(calls,1);assert.equal(result.jobs.length,2);assert.deepEqual(result.incompleteQueries,[]);assert.equal(result.status,'ok');
+});
 test('negação de rede é erro e interrompe consultas repetidas',async()=>{
  let calls=0;const result=await collectJobs({queries:['Produto','Projetos'],fetchPage:async()=>{calls++;throw Error('Acesso negado (403)');}});
  assert.equal(calls,1);assert.equal(result.status,'error');assert.equal(result.jobs.length,0);

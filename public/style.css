@@ -2,3 +2,7 @@
 
 section p a{color:#65dfb6}
 .job-card{border-top:1px solid #526578;margin-top:24px;padding-top:16px}.job-card a{color:#65dfb6}button:disabled{opacity:.6;cursor:wait}details{margin:16px 0}details p{white-space:pre-wrap;overflow-wrap:anywhere}
+
+.filter-option{display:flex;align-items:flex-start;gap:10px;font-size:.95rem}.filter-option input{width:auto;margin-top:6px;flex-shrink:0}
+
+.application-controls{margin-top:16px;padding:14px;border:1px solid #304253;border-radius:10px}.application-controls button{margin-top:8px}

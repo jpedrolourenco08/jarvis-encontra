@@ -26,3 +26,29 @@ Validação no Windows durante a recuperação: 16 de 17 testes passaram; um fal
 
 ## Arquitetura proposta
 Manter painel e servidor Node.js; adicionar armazenamento local privado para perfil e histórico; separar conectores de busca da automação de candidaturas no navegador local. O ambiente cloud serve para desenvolvimento e testes; acesso ao Chrome e arquivos pessoais do Windows deve ser tratado como uma integração separada.
+
+## Validação e avanço no cloud — 4 de novembro de 2026 (Brasília)
+- Ambiente confirmado pelo runtime como cloud, running e connected, com política de rede aplicada.
+- Checkout isolado na branch local `work`, partindo do mesmo commit da `main` remota: `70d24ece793b1976356b409f76cc245afc5e34c3`.
+- Corrigida leitura de `pagination.total` e mensagem de erro para o domínio real `portal.gupy.io`.
+- Consulta pública real: HTTP 200; coleta de 17 páginas, 273 anúncios, 100 títulos de entrada; sem erros, parcial por limites de páginas. Dados variam por execução e não comprovam elegibilidade.
+- Aplicado filtro inicial de títulos explícitos de entrada/júnior e opção de mostrar todos, preservando a coleta original. Títulos sem nível informado não são presumidos júnior.
+- 21 testes passaram, incluindo cache e novos casos de filtro/paginação.
+- Não há integração de preenchimento ou envio de candidaturas nesta versão. Nenhuma candidatura enviada e nenhum dado pessoal publicado.
+- Publicação permanente ainda pendente: os scripts auxiliares do plugin Sites não estão instalados no executor nem acessíveis pelos recursos consultados. Não foi criado Site nem alterada sua audiência. O servidor local de desenvolvimento não equivale a serviço permanente.
+- Próximo passo: definir uso no Windows junto do Chrome ou hospedagem online privada; depois implementar histórico e integração de candidaturas, com dados confirmados e sem presumir acesso ao navegador do Windows a partir do cloud.
+
+## Continuação — execução no Windows e histórico 0.2.0
+- Usuário escolheu execução no próprio Windows, junto do Chrome, e confirmou que o painel iniciou e retornou vagas. Hospedagem online deixa de ser objetivo imediato.
+- Implementado histórico em `data/applications.json`, fora do Git e dos pacotes, com pendente, erro e enviada por confirmação manual explícita. Nenhum envio automático implementado.
+- URLs normalizadas deduplicam o mesmo anúncio; salvar e abrir anúncios não registram envio. Identidades diferentes da mesma vaga ainda exigem revisão.
+- Gravações atômicas e sequenciais no mesmo processo, com falha explícita para arquivo corrompido; manter somente uma instância por pasta.
+- Adicionadas verificações de Host/Origin locais, limite de corpo e bloqueio de cache HTTP para histórico.
+- 26 testes passaram; HTTP validado com registros sintéticos isolados (200 para painel e histórico; 400 para enviada sem confirmação; 403 para Host/Origin externos; 413 para corpo excedido). Validação visual do histórico no Windows pendente.
+- Próximo trabalho: perfil local com respostas confirmadas e currículo selecionado no Windows; depois avaliar integração permitida com Chrome/Gupy. Não existe conexão automática do cloud com o Chrome do usuário.
+
+## Atualizações pelo Git
+- Usuário confirmou que conseguiu configurar a execução pelo Git no Windows.
+- Adicionados ATUALIZAR-JARVIS.cmd (pull fast-forward e testes) e TESTAR-JARVIS.cmd. Nenhum reset, limpeza de dados ou instalação de dependências é necessário.
+- Adicionado workflow de testes Linux/Windows em Node 22/24, sem consultas reais ou envio de candidaturas.
+- Alterações devem ser disponibilizadas em pull request para main; o usuário recebe a atualização na main após integração.
