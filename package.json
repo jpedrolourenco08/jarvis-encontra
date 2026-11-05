@@ -1,1 +1,1 @@
-{"name":"jarvis-encontra","version":"0.2.0","private":true,"type":"module","scripts":{"start":"node server.js","test":"node --test"},"engines":{"node":">=22"}}
+{"name":"jarvis-encontra","version":"0.2.0","private":true,"type":"module","scripts":{"start":"node server.js","test":"node --test","prepare:chrome":"node automation/prepare-chrome.js"},"engines":{"node":">=22"},"dependencies":{"playwright-core":"1.64.1"}}

@@ -4,7 +4,7 @@ Assistente pessoal para transição a Produto, Projetos e Processos.
 
 ## Executar
 
-Requer Node.js 22 ou superior e curl no PATH. Não há pacotes npm externos. O curl preserva o proxy HTTPS e a verificação TLS configurados no ambiente.
+Requer Node.js 22 ou superior e curl no PATH. O painel de busca não exige instalação de pacotes. A preparação opcional do Chrome usa playwright-core, instalado por PREPARAR-CHROME.cmd. O curl preserva o proxy HTTPS e a verificação TLS configurados no ambiente.
 
 ```sh
 cd /workspace/jarvis-encontra
@@ -65,3 +65,13 @@ Na pasta obtida com `git clone`, encerre o servidor e abra **ATUALIZAR-JARVIS.cm
 Para apenas rodar os testes, abra **TESTAR-JARVIS.cmd**. Os resultados ficam visíveis na janela; falhas não iniciam o servidor. Depois de uma atualização bem-sucedida, abra `INICIAR-JARVIS.cmd` e use Ctrl+F5 no navegador.
 
 Na primeira atualização, antes de esses atalhos existirem na sua pasta, execute `git pull --ff-only` e `npm.cmd test` no PowerShell. Mudanças propostas por pull request só chegam à `main` após a integração. O GitHub Actions também executa os testes em Linux e Windows com Node 22 e 24; esses testes usam dados sintéticos e não consultam vagas reais nem enviam candidaturas.
+
+## Preparação do Chrome para candidaturas
+
+**O envio automático ainda não está implementado.** Esta etapa valida a conexão com o Chrome instalado no Windows e a inspeção dos controles visíveis na Gupy. Ela não conecta o navegador deste computador a um agente no cloud.
+
+Abra `PREPARAR-CHROME.cmd`. Ele instala a dependência fixada no package-lock.json com `npm ci --ignore-scripts` e abre o Google Chrome com perfil separado em `data/chrome-automation`. Não é necessário habilitar uma porta de depuração nem fornecer credenciais no chat. Faça login diretamente nesse Chrome; a sessão não é a mesma do seu perfil Chrome habitual. Feche a sessão de automação anterior antes de abrir outra.
+
+Abra uma vaga e navegue manualmente até a primeira etapa da candidatura, sem enviar. Volte ao terminal e pressione Enter. Deixe somente a aba da candidatura aberta quando solicitado. O programa identifica somente abas HTTPS de gupy.io e subdomínios e salva contagens de controles, indicador de CAPTCHA e nomes de ações de uma lista fixa em `data/chrome-diagnostic.json`. Não coleta valores, HTML, textos de perguntas, cookies ou capturas de tela; não clica, não preenche e não envia candidaturas. A detecção de CAPTCHA é indicativa e não cobre todos os desafios.
+
+Para continuar o desenvolvimento, informe o resumo impresso no terminal, especialmente `controls`, `required`, `actions` e `challengePresent`, e descreva a etapa aberta. Não compartilhe o perfil do Chrome, cookies ou senhas. A pasta `data` continua ignorada pelo Git. Esta inspeção foi validada com Chromium e formulário sintético no Linux; Chrome/Windows e os formulários autenticados reais ainda precisam de validação. Falhas de inicialização, políticas da Gupy ou páginas não suportadas precisam ser resolvidas antes de implementar submissões.

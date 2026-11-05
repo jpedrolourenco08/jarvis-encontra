@@ -52,3 +52,11 @@ Manter painel e servidor Node.js; adicionar armazenamento local privado para per
 - Adicionados ATUALIZAR-JARVIS.cmd (pull fast-forward e testes) e TESTAR-JARVIS.cmd. Nenhum reset, limpeza de dados ou instalação de dependências é necessário.
 - Adicionado workflow de testes Linux/Windows em Node 22/24, sem consultas reais ou envio de candidaturas.
 - Alterações devem ser disponibilizadas em pull request para main; o usuário recebe a atualização na main após integração.
+
+## Preparação local para envio automático — 5 de novembro de 2026
+- Usuário solicitou envio automático, confirmou cadastro/currículo prontos na Gupy e autorizou acesso ao Chrome quando necessário. A autorização não estabelece conexão técnica entre cloud e Windows.
+- PR anterior integrado na main (7efb16d); trabalho atual parte desse commit.
+- Adicionado PREPARAR-CHROME.cmd e script com playwright-core fixado em 1.64.1. Abre perfil Chrome separado em data/chrome-automation e aguarda login/navegação manuais. Nenhuma depuração remota exposta pelo aplicativo.
+- Inspeção coleta somente contagens de controles e nomes de ações conhecidos, sem valores, HTML, perguntas, cookies ou screenshots. Saída local data/chrome-diagnostic.json. Nenhuma submissão habilitada ou implementada.
+- 27 testes passaram e inspeção foi exercitada no Chromium Linux com formulário sintético, verificando ausência de valores no relatório e ausência de submissão. Chrome/Windows e formulários autenticados reais continuam pendentes.
+- Próximo passo depende de execução local do preparador e descrição da etapa/relatório sem dados pessoais. Não inventar seletores de submissão nem registrar enviada sem confirmação real da plataforma.
